@@ -36,4 +36,13 @@ public class Sprite {
     public void setImage(Image image) {
         this.image = image;
     }
+
+    @Override
+    public String toString() {
+        return "Sprite{" +
+                "x=" + x +
+                ", y=" + y +
+                ", image=" + image +
+                '}';
+    }
 }

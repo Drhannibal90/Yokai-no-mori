@@ -45,6 +45,7 @@ public class PlateauGraphic extends JPanel {
         imgKirinLoaded = new ImageIcon(new ImageIcon("kirin.png").getImage().getScaledInstance(65, 65, Image.SCALE_DEFAULT));
         imgOniLoaded = new ImageIcon(new ImageIcon("oni.png").getImage().getScaledInstance(65, 65, Image.SCALE_DEFAULT));
         imgKoropokkuruLoaded = new ImageIcon(new ImageIcon("koropokkuru.png").getImage().getScaledInstance(65, 65, Image.SCALE_DEFAULT));
+
         imgPlateau = img;
 
 
@@ -77,7 +78,12 @@ public class PlateauGraphic extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
 
         g2.drawImage(imgPlateau, 0,0,null);
-            initPlateau(g2);
+         //   initPlateau(g2);
+            for (Sprite s:listeSprite){
+                System.out.println(s);
+                g2.drawImage(s.getImage(), largeurCase*s.getX()+(int)(bordureX/1.2), hauteurCase*s.getY()+(int)(bordureY/1.7), null);
+            }
+        System.out.println(listeSprite.size());
 
 
 
@@ -85,9 +91,40 @@ public class PlateauGraphic extends JPanel {
 
     }
     public void tableauToSprite(int[][] tab){
+        //* Destruction des anciens Sprite
+        listeSprite.clear();
+            for (int i = 0; i < tab.length; i++){
+                for (int j = 0; j < tab[i].length; j++){
+                    int piece = tab[i][j];
+                    if (piece != 0){ //* si on a une pièce sur la case [i][j]
+                        ImageIcon imagePiece = imgKodamaLoaded; //* default value
 
+                        switch(piece){
+                                //* J1
+                            case 1: imagePiece = imgKodamaLoaded; break;
+                            case 2: imagePiece = imgKodamaLoaded; break;
+                            case 3: imagePiece = imgOniLoaded; break;
+                            case 4: imagePiece = imgOniLoaded; break;
+                            case 5: imagePiece = imgKirinLoaded; break;
+                            case 6: imagePiece = imgKoropokkuruLoaded; break;
+                                //* J2
+                            case -1: imagePiece = imgKodamaLoaded; break;
+                            case -2: imagePiece = imgKodamaLoaded; break;
+                            case -3: imagePiece = imgOniLoaded; break;
+                            case -4: imagePiece = imgOniLoaded; break;
+                            case -5: imagePiece = imgKirinLoaded; break;
+                            case -6: imagePiece = imgKoropokkuruLoaded; break;
+                        }
+                        //* Création du nouveau sprite
+                        Sprite spritePiece = new Sprite(i,j,imagePiece.getImage());
+                        //* Ajout du Sprite dans la liste de Sprite à afficher
+                        listeSprite.add(spritePiece);
+
+                    }
+                }
+            }
     }
-    
+
 
 
     public int getBordureX() {

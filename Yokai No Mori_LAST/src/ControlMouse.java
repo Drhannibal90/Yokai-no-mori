@@ -53,6 +53,16 @@ public class ControlMouse implements MouseListener {
 
        // System.out.println("X : " + (mouseEvent.getX()-(bordureX/2))/largeurCase);
        // System.out.println("Y : " + (mouseEvent.getY()-(bordureY/2))/hauteurCase);
+        int [][] tabTest = {
+                {4,0,0,0,0,-4},
+                {5,1,4,0,-1,-5},
+                {6,1,0,0,-1,-6},
+                {5,1,5,0,-1,-5},
+                {4,0,1,0,0,4},
+
+        };
+        plateauGraph.tableauToSprite(tabTest);
+        plateauGraph.repaint();
 
         System.out.println(caseClicked);
     }
