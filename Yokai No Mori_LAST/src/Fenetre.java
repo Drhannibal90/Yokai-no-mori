@@ -22,7 +22,7 @@ public class Fenetre extends JFrame {
 
     public Fenetre(Plateau plateau){
         this.petiteFenetre = true;
-        this.xFenetre = 800;
+        this.xFenetre = 553;
         this.yFenetre = 850;
         this.plateau = plateau;
         //* Création fenêtre
@@ -31,7 +31,7 @@ public class Fenetre extends JFrame {
         addToWindow();
         pack();
 
-        //  setSize(this.xFenetre, this.yFenetre);
+     //   setSize(this.xFenetre, this.yFenetre);
         setTitle("Yokaï no mori");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -44,13 +44,12 @@ public class Fenetre extends JFrame {
 
         //* Création de l'image de fond ( plateau )
         ImageIcon imageIcon =new ImageIcon( "fond2.png");
-        ImageIcon imgNull =new ImageIcon( "fond3.png");
-
+        ImageIcon imgNull =new ImageIcon( "fond3.png"); //* taille mini fenetre
 
         this.imagePlateau = new JPanel();
-        this.imagePlateau = new PlateauGraphic(resizeWindow(imageIcon).getImage(), plateau, this);
-        JLabel image = new JLabel(resizeWindow(imgNull));
-        this.imagePlateau.add(image);
+        this.imagePlateau = new PlateauGraphic(resizeWindow(imageIcon, xFenetre, yFenetre).getImage(), plateau, this);
+        JLabel image = new JLabel(resizeWindow(imgNull, xFenetre, yFenetre));
+       this.imagePlateau.add(image);
 
     }
 
@@ -89,27 +88,16 @@ public class Fenetre extends JFrame {
         setContentPane(this.fenetre);
     }
 
-    public ImageIcon resizeWindow(ImageIcon imageIcon){
-        //get local graphics environment
-        GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();
-        //get maximum window bounds
-        Rectangle localEnv =graphicsEnvironment.getMaximumWindowBounds();
-        double screenWidth = localEnv.getWidth();
-        double screenHeight = localEnv.getHeight();
+public ImageIcon resizeWindow(ImageIcon imageIcon, int width, int height){
+    //   this.xFenetre = ((int) (1550)/2)-247;
+    //   this.yFenetre = ((int) 880)-50; //* 247
 
-        //this.xFenetre = ((int) (screenWidth)/2)-247;
-        this.xFenetre = ((int) (screenHeight * (screenHeight/screenWidth)));
-        this.yFenetre = ((int) screenHeight)-50; //* 247
+    Image img = imageIcon.getImage();
+    Image imgResize = img.getScaledInstance((int)(width),(int)(height),Image.SCALE_DEFAULT);
+    imageIcon=new ImageIcon(imgResize);
 
-        //   this.xFenetre = ((int) (1550)/2)-247;
-        //   this.yFenetre = ((int) 880)-50; //* 247
-
-        Image img = imageIcon.getImage();
-        Image imgResize = img.getScaledInstance((int)(xFenetre),(int)(yFenetre),Image.SCALE_DEFAULT);
-        imageIcon=new ImageIcon(imgResize);
-
-        return imageIcon;
-    }
+    return imageIcon;
+}
 
 
     //* Méthodes pour initialiser les controleurs
@@ -123,6 +111,7 @@ public class Fenetre extends JFrame {
         this.imagePlateau.addMouseListener(controlMouse);
     }
     public void update(){
+        imagePlateau.repaint();
     }
 
     //* ...
@@ -152,5 +141,13 @@ public class Fenetre extends JFrame {
 
     public void setyFenetre(int yFenetre) {
         this.yFenetre = yFenetre;
+    }
+
+    public JPanel getImagePlateau() {
+        return imagePlateau;
+    }
+
+    public void setImagePlateau(JPanel imagePlateau) {
+        this.imagePlateau = imagePlateau;
     }
 }

@@ -22,40 +22,38 @@ public class ControlMouse implements MouseListener {
     private int largeurCase;
     private int bordureY;
     private int hauteurCase;
+    private PlateauGraphic plateauGraph;
 
 
     public ControlMouse(Plateau p, Fenetre f){
         this.plateau = p;
         this.fenetre = f;
-        this.fenetre.setControlClick(this);
-        this.caseClicked = -1;
-        this.bordureX = (int)((7.7*(fenetre.getxFenetre()))/100); //* 7.7
-        this.largeurCase = (fenetre.getxFenetre()-(bordureX)) / 5;
-        this.bordureY = (int)((21.1*(fenetre.getyFenetre()))/100);
-        this.hauteurCase = (fenetre.getyFenetre()-(bordureY)) / 6;
+        fenetre.setControlClick(this);
+        caseClicked = -1;
+        plateauGraph = (PlateauGraphic) fenetre.getImagePlateau();
+        bordureX = plateauGraph.getBordureX();
+        largeurCase = plateauGraph.getLargeurCase();
+        bordureY = plateauGraph.getBordureY();
+        hauteurCase = plateauGraph.getHauteurCase();
     }
 
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        this.caseClicked = -1;
-        if ((mouseEvent.getX() >= 32) && (mouseEvent.getX() <= 750) && (mouseEvent.getY() >= 102) && (mouseEvent.getY() <= 700) ){
-            this.caseClicked = (mouseEvent.getX()-bordureX)/largeurCase + (mouseEvent.getY()-bordureY)/hauteurCase *5 ;
+       caseClicked = -1;
+        /*if ((mouseEvent.getX() >= 32) && (mouseEvent.getX() <= 750) && (mouseEvent.getY() >= 102) && (mouseEvent.getY() <= 700) ){
+            caseClicked = (mouseEvent.getX()-bordureX)/largeurCase + (mouseEvent.getY()-bordureY)/hauteurCase *5 ;
 
-        }
+        }*/
 
         this.caseClicked = ((mouseEvent.getX()-(bordureX/2))/largeurCase) + ((mouseEvent.getY()-(bordureY/2))/hauteurCase) *5 ;
 
 
         System.out.println("----------------------------");
-       // System.out.println("largeur = " + this.fenetre.getxFenetre() + " hauteur : " + fenetre.getyFenetre());
-      // System.out.println("Lcase = " + largeurCase);
-      //  System.out.println("bordure = " + bordureX);
+
        // System.out.println("X : " + (mouseEvent.getX()-(bordureX/2))/largeurCase);
        // System.out.println("Y : " + (mouseEvent.getY()-(bordureY/2))/hauteurCase);
 
-        // System.out.println("X : " + ((mouseEvent.getX()-bordureX)/largeurCase) + " / Y : " + ((mouseEvent.getY()-bordureY)/hauteurCase));
-      // System.out.println("X :" + (mouseEvent.getX()) + " / Y : " + mouseEvent.getY());
         System.out.println(caseClicked);
     }
 
